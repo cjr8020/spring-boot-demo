@@ -11,4 +11,4 @@ logging:
   level:
     org.springframework.web: INFO
     com.example.demo: DEBUG
-    jv.proto.springboot.helper: WARN
+    com.example.helper: WARN

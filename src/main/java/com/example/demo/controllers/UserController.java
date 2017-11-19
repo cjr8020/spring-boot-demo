@@ -1,31 +1,33 @@
 package com.example.demo.controllers;
 
-import com.example.helper.SpringLoggingHelper;
+import com.example.demo.user.ApplicationUser;
+import com.example.demo.user.ApplicationUserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-/**
- * In Spring's approach to building RESTful web services, HTTP requests are handled by a controller.
- * These components are easily identified by the @RestController annotation,
- * and the @RestController annotation handles GET requests for '/greeting' by
- * returning a new instance fo the Greeting class.
- */
 @RestController
+@RequestMapping("/users")
 public class UserController {
+    private static final Logger log = LoggerFactory.getLogger(UserController.class);
 
-    private final Logger log = LoggerFactory.getLogger(this.getClass());
+    private ApplicationUserRepository applicationUserRepository;
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    @RequestMapping("/users")
-    public @ResponseBody String getUsers() {
+    public UserController(ApplicationUserRepository applicationUserRepository,
+                          BCryptPasswordEncoder bCryptPasswordEncoder) {
+        this.applicationUserRepository = applicationUserRepository;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+    }
 
-        log.info("gimme users!");
-
-        SpringLoggingHelper.helpMethod();
-
-        return "{\"users\":[{\"firstname\":\"Richard\", \"lastname\":\"Feynman\"}," +
-                "{\"firstname\":\"Marie\",\"lastname\":\"Curie\"}]}";
+    @PostMapping("/sign-up")
+    public void signUp(@RequestBody ApplicationUser user) {
+        log.info("User {} signed up.", user.getUsername());
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        applicationUserRepository.save(user);
     }
 }
