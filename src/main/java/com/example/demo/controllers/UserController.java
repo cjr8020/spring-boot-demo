@@ -13,21 +13,26 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/users")
 public class UserController {
-    private static final Logger log = LoggerFactory.getLogger(UserController.class);
 
-    private ApplicationUserRepository applicationUserRepository;
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+  private static final Logger log = LoggerFactory.getLogger(UserController.class);
 
-    public UserController(ApplicationUserRepository applicationUserRepository,
-                          BCryptPasswordEncoder bCryptPasswordEncoder) {
-        this.applicationUserRepository = applicationUserRepository;
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-    }
+  private ApplicationUserRepository applicationUserRepository;
+  private BCryptPasswordEncoder binCryptPasswordEncoder;
 
-    @PostMapping("/sign-up")
-    public void signUp(@RequestBody ApplicationUser user) {
-        log.info("User {} signed up.", user.getUsername());
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        applicationUserRepository.save(user);
-    }
+  public UserController(ApplicationUserRepository applicationUserRepository,
+      BCryptPasswordEncoder binCryptPasswordEncoder) {
+    this.applicationUserRepository = applicationUserRepository;
+    this.binCryptPasswordEncoder = binCryptPasswordEncoder;
+  }
+
+  /**
+   * User self service.
+   * @param user user self-registration
+   */
+  @PostMapping("/sign-up")
+  public void signUp(@RequestBody ApplicationUser user) {
+    log.info("User {} signed up.", user.getUsername());
+    user.setPassword(binCryptPasswordEncoder.encode(user.getPassword()));
+    applicationUserRepository.save(user);
+  }
 }

@@ -224,7 +224,7 @@ customize the security framework to our needs.
 
 ### JWTAuthenticationFilter
 
-`JWTAuthenticationFilter` extends Spring's `UsernamePasswordAuthenticationFilter`
+`JwtAuthenticationFilter` extends Spring's `UsernamePasswordAuthenticationFilter`
 When adding a new filter to Spring Security, there are a couple of options:
 1. explicitly define where in the `filter chain` we want this filter, or
 2. extend a Spring provided filter so that Spring can figure out
@@ -240,7 +240,7 @@ logs in.  This method generates a JWT for this user.
 
 ### Authorization Filter
 
-`JWTAuthorizationFilter` extends Spring's `BasicAuthenticationFilter`
+`JwtAuthorizationFilter` extends Spring's `BasicAuthenticationFilter`
 to make Spring replace it in the `filter chain` with this
 custom implementation.
 

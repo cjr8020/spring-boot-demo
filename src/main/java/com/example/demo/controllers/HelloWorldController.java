@@ -8,11 +8,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class HelloWorldController {
 
-    private final Logger log = LoggerFactory.getLogger(this.getClass());
+  private final Logger log = LoggerFactory.getLogger(this.getClass());
 
-    @RequestMapping("/")
-    public String hello() {
-        log.info("say hello.. ");
-        return "hello world";
-    }
+  @RequestMapping("/")
+  public String hello() {
+    log.info("say hello.. ");
+    return "hello world";
+  }
 }
